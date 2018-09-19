@@ -8,16 +8,41 @@
 //   anagrams('RAIL! SAFETY!', 'fairy tales') --> True
 //   anagrams('Hi there', 'Bye there') --> False
 
-const trimStr = (str) => {
-  return str.toLowerCase().replace(/[^\w]/g, "")
+const buildCharMap = (string) => {
+  const charMap = {}
+
+  for (let char of string.replace(/[^\w]/g).toLowerCase()) {
+    charMap[char] = charMap[char] + 1 || 1
+  }
+  return charMap
 }
 
-const sortStr = (str) => {
-  let trimmed = trimStr(str)
+function anagrams(stringA, stringB) {
+  const aMap = buildCharMap(stringA)
+  const bMap = buildCharMap(stringB)
 
-  return trimmed.split("").sort().join("")
+  if (Object.keys(aMap).length !== Object.keys(bMap).length) {
+    return false
+  }
+
+  for (let key in aMap) {
+    if (aMap[key] !== bMap[key]) {
+      return false
+    }
+  }
+  return true
 }
 
-const anagrams = (stringA, stringB) => {
-  return sortStr(stringA) === sortStr(stringB)
-}
+// const trimStr = (str) => {
+//   return str.toLowerCase().replace(/[^\w]/g, "")
+// }
+//
+// const sortStr = (str) => {
+//   let trimmed = trimStr(str)
+//
+//   return trimmed.split("").sort().join("")
+// }
+//
+// const anagrams = (stringA, stringB) => {
+//   return sortStr(stringA) === sortStr(stringB)
+// }
